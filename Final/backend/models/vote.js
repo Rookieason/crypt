@@ -23,6 +23,9 @@ const VoteSchema = new Schema({
     },
     c2: {
         type: Number
+    },
+    date: {
+        type: String
     }
 });
 

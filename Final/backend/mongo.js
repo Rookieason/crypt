@@ -11,14 +11,44 @@ mongoose.connect(
 )
 .then((res) => console.log("mongo db connection created"));
 
-const generateVote = async ( nm, q, g, h ) => {
+const voteResult = async (target) => {
+    const existvote = await Vote.findOne({name:target});
+    if(existvote){
+        return {
+            q: existvote.q,
+            c1: existvote.c1,
+            c2: existvote.c2
+        }
+    }else{
+        return {
+            q: 0,
+            c1: 0,
+            c2: 0
+        }
+    }
+}
+
+const voteDate = async (target) => {
+    const existvote = await Vote.findOne({name: target});
+    if(existvote){
+        return {
+            date: existvote.date
+        }
+    }else{
+        return {
+            date: ""
+        }
+    }
+}
+
+const generateVote = async ( nm, q, g, h, date ) => {
     const existvote = await Vote.findOne({name:nm});
     if(existvote){
         return{
             gen:false
         }
     }else try{
-        const newVote = new Vote({ name:nm, q:q, g:g, h:h, c1:1, c2:1 });
+        const newVote = new Vote({ name:nm, q:q, g:g, h:h, c1:1, c2:1, date:date });
         newVote.save();
         return {
             gen: true
@@ -135,4 +165,4 @@ db.once("open",() => {
     console.log("db opened successfully.")
 });
 
-export { checkUser, voted, voteRequest, generateVote, voteList }
+export { checkUser, voted, voteRequest, generateVote, voteList, voteResult, voteDate }

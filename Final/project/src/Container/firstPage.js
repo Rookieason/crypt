@@ -83,8 +83,7 @@ const FirstPage = () => {
         <Banner>
             <Carousel autoplay>
                 <div><LittleDiv onClick={Signin} style={{"cursor":"pointer"}}>Rookieason</LittleDiv></div>
-                <div><LittleDiv onClick={Signin} style={{"cursor":"pointer"}}>kenchung285</LittleDiv></div>
-                <div><LittleDiv onClick={Signin} style={{"cursor":"pointer"}}>Joy7280</LittleDiv></div>
+                <div><LittleDiv onClick={Signin} style={{"cursor":"pointer"}}>Chris</LittleDiv></div>
             </Carousel>
         </Banner>
         <Package>

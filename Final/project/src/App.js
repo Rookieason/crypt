@@ -14,6 +14,7 @@ import ChooseVote from './Container/chooseVote.js'
 import VoteContextProvider from './Context/vote';
 import UserContextProvider from './Context/user';
 import TargetContextProvider from './Context/target';
+import DateContextProvider from './Context/date';
 
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -28,7 +29,9 @@ function App() {
             <VoteContextProvider>
               <TargetContextProvider>
                 <UserContextProvider>
-                  <SigninPage/>
+                  <DateContextProvider>
+                    <SigninPage/>  
+                  </DateContextProvider>  
                 </UserContextProvider>                
               </TargetContextProvider>
             </VoteContextProvider>
@@ -42,7 +45,9 @@ function App() {
             <VoteContextProvider>
               <TargetContextProvider>
                 <UserContextProvider>
-                  <Homepage/>  
+                  <DateContextProvider>
+                    <Homepage/>  
+                  </DateContextProvider>                    
                 </UserContextProvider>
               </TargetContextProvider>
             </VoteContextProvider>
@@ -52,7 +57,9 @@ function App() {
             <VoteContextProvider>
               <TargetContextProvider>
                 <UserContextProvider>
-                  <Create/>   
+                  <DateContextProvider>
+                    <Create/>  
+                  </DateContextProvider>
                 </UserContextProvider>
               </TargetContextProvider>               
             </VoteContextProvider>
@@ -62,7 +69,9 @@ function App() {
             <VoteContextProvider>
               <TargetContextProvider>
                 <UserContextProvider>
-                  <Choose/>     
+                  <DateContextProvider>
+                    <Choose/>   
+                  </DateContextProvider>   
                 </UserContextProvider>
               </TargetContextProvider>
             </VoteContextProvider>
@@ -72,7 +81,9 @@ function App() {
             <VoteContextProvider>
               <TargetContextProvider>
                 <UserContextProvider>
-                  <ChooseVote/>  
+                  <DateContextProvider>
+                    <ChooseVote/>  
+                  </DateContextProvider>                    
                 </UserContextProvider>                           
               </TargetContextProvider>
             </VoteContextProvider>

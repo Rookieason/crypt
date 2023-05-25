@@ -5,6 +5,9 @@ import { Link, useHistory } from 'react-router-dom'
 
 import { voteContext } from '../Context/vote'
 import { targetContext } from '../Context/target'
+import { dateContext } from '../Context/date'
+
+import axios from '../api'
 
 const Div = styled.div`
     display: flex;
@@ -18,11 +21,17 @@ const Div = styled.div`
 
 const ChooseVote = () => {
     const { vote } = useContext(voteContext)
+    const { setDate } = useContext(dateContext);
     const { target, setTarget } = useContext(targetContext)    
     const goPath = useHistory()
-    function Tag(name){
-        console.log(name)
+    const Tag = async (name) => {
         setTarget(name)
+        const {data: {date}} = await axios.get('/api/votedate', {
+            params:{
+                target: name
+            }
+        })
+        setDate(date)
         goPath.push('/homepage')
     }
     return <Div>

@@ -4,9 +4,10 @@ import { Checkbox, Button } from 'antd'
 import styled from 'styled-components'
 import { userContext } from '../Context/user.js'
 import { targetContext } from '../Context/target.js'
+import { dateContext } from '../Context/date.js'
 import axios from '../api'
 
-import Elgamel from '../Encrypt/elgamel.js'
+import Elgamal from '../Encrypt/elgamal.js'
 
 const Div = styled.div`
     display: flex;
@@ -46,11 +47,40 @@ const options = [
     },
 ];
 const Homepage = () => {
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+       
+        element.style.display = 'none';
+        document.body.appendChild(element);
+       
+        element.click();
+       
+        document.body.removeChild(element);
+    }
+    const testDate = "2023-05-25 12:00:00"
+    const { date } = useContext(dateContext)
     const { target } = useContext(targetContext)
     const { user } = useContext(userContext)
     const [ans, setAns] = useState([])
-    console.log(target)
+    const pull = async() => {
+        const {
+            data: { q, c1, c2 },
+        } = await axios.get('/api/voteresult', {
+            params:{
+                target: target
+            }
+        })
+        var strq = q.toString()
+        var strc1 = c1.toString()
+        var strc2 = c2.toString()
+        var context = target + ": \n" + "q: " + strq + "\n" + "c1: " + strc1 + "\n" + "c2: " + strc2 + "\n"
+        download('result.txt', context)
+    }
     const send = async() => {
+        
         var message = 1;
         for(var i = 0;i<ans.length;i++){
             message = message * ans[i];
@@ -68,7 +98,7 @@ const Homepage = () => {
             },
         });
         if(!card){
-            var { c1, c2 } = Elgamel( q, g, h, message );
+            var { c1, c2 } = Elgamal( q, g, h, message );
             console.log(c1);
             console.log(c2);
             const {
@@ -91,7 +121,9 @@ const Homepage = () => {
         }
         
     }
-    return <Div>
+    return (Date.parse(Date()).valueOf() > Date.parse(date).valueOf()) ? 
+    (<Div><Button onClick = {pull}>Pull the Result down</Button></Div>):(
+    <Div>
         <TitleDiv>
             <h1>{target}</h1>
         </TitleDiv>
@@ -100,7 +132,7 @@ const Homepage = () => {
         </TitleDiv>
         <br/>
         <Button onClick = {send}>Send</Button>
-    </Div>
+    </Div>)
 }
 
 export default Homepage;

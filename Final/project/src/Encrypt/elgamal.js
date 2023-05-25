@@ -18,7 +18,7 @@ const power = (a,b,c) => {
     return x%c
 }
 
-const Elgamel = (q,g,h,m) => {
+const Elgamal = (q,g,h,m) => {
     var y = 1;
     while(!isPrime(y)){
         y = Math.floor((q-2) * Math.random()) + 2;
@@ -29,4 +29,4 @@ const Elgamel = (q,g,h,m) => {
     return { c1, c2 };
 }
 
-export default Elgamel
+export default Elgamal

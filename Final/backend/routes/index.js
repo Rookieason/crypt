@@ -1,5 +1,5 @@
 import express from 'express'
-import { checkUser, voted, voteRequest, generateVote, voteList } from '../mongo.js'
+import { checkUser, voted, voteRequest, generateVote, voteList, voteResult, voteDate } from '../mongo.js'
 const router = express.Router();
 
 router.post('/create-user', async(req, res) => {
@@ -25,7 +25,17 @@ router.get('/votelist', async (req, res) => {
 
 router.get('/generate', async (req, res) => {
     // const { q, g, h } = spawn('python3', ['Generate.py', req.query.name])
-    const { gen } = await generateVote( req.query.name, req.query.q, req.query.g, req.query.h )
+    const { gen } = await generateVote( req.query.name, req.query.q, req.query.g, req.query.h, req.query.date )
     res.json({ gen: gen });
+})
+
+router.get('/voteresult', async (req, res) => {
+    const { q, c1, c2 } = await voteResult( req.query.target ) 
+    res.json({ q: q, c1: c1, c2: c2 })
+})
+
+router.get('/votedate', async (req, res) => {
+    const { date } = await voteDate( req.query.target )
+    res.json({ date: date })
 })
 export default router;
